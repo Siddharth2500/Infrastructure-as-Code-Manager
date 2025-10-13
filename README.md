@@ -1,58 +1,70 @@
-🏗️ Infrastructure as Code Manager — Standalone IaC Orchestrator
+# 🏗️ Infrastructure as Code Manager — Multi-Layer IaC Orchestrator
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?logo=python&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-Config-623CE4?logo=terraform)
+![AWS](https://img.shields.io/badge/CloudFormation-JSON-FF9900?logo=amazonaws&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-YAML-326CE5?logo=kubernetes)
+![CI/CD](https://img.shields.io/badge/IaC-Automation-2088FF?logo=githubactions)
+![Logging](https://img.shields.io/badge/Logging-Built_in-4CAF50?logo=logstash)
+![Dependencies](https://img.shields.io/badge/Dependencies-None-green?logo=python)
+
+**Infrastructure as Code Manager (IaC Manager)** is a **standalone Python 3** utility that generates, tracks, and audits deployments across **Terraform**, **CloudFormation**, and **Kubernetes** — all without external dependencies.
+
+It’s built for DevOps and platform engineers who need a lightweight way to **model**, **simulate**, and **manage** IaC workflows locally or in demo environments.
+
+---
+
+## 🛠 Tech & Languages
+
+| Layer | Tech / Format | Purpose |
+|------|------|------|
+| Language | **Python 3.10+** | Pure standard library, no dependencies |
+| IaC Templates | **Terraform / CloudFormation / Kubernetes** | Generate multi-layer infra templates |
+| Storage | **JSON Files** | Store deployments, resources, and templates |
+| Logging | **Python Logging** | Record operations and audit events |
+| Reports | **JSON Drift Report** | Summarize deployments and drift status |
+
+---
+
+## 🌐 Architecture
+
+<p align="center">
+  <img src="assets/architecture.png" alt="IaC Manager Architecture" width="650" />
+</p>
 
 
+Flow:
+1. Generates **Terraform**, **CloudFormation**, or **Kubernetes** templates  
+2. Simulates deployment and tracks created resources  
+3. Persists metadata in local JSON storage  
+4. Generates **drift reports** and audit summaries  
+5. Exports deployment data for recordkeeping or documentation  
 
+---
 
+## 📦 Repository Structure
 
-
-
-
-
-
-
-
-Infrastructure as Code Manager (IaC Manager) is a standalone Python 3 tool that generates, tracks, and audits deployments across multiple infrastructure layers — Terraform, CloudFormation, and Kubernetes — without requiring any external dependencies.
-
-It’s built for DevOps and platform engineers who want a lightweight way to model, simulate, and manage IaC workflows locally or in demos.
-
-🧰 Features
-
-🏗️ Generate Terraform, CloudFormation, or Kubernetes templates
-
-🧾 Track deployments and resources with built-in JSON metadata
-
-🔍 Generate drift reports for audit and compliance
-
-💾 Export deployment details for recordkeeping
-
-✅ Zero external dependencies — uses Python’s standard library only
-
-🧪 Built-in demo runner via python iac_manager.py
-
-🛠️ Tech Stack
-Layer	Tech / Format	Purpose
-Language	Python 3.10+	Pure standard library, no dependencies
-IaC Templates	Terraform / CF / K8s	Infra provisioning definitions
-Storage	JSON Files	Deployments, resources, templates metadata
-Logging	Python Logging	Action tracking and audit trail
-Drift Report	JSON Summary	Deployment and resource overview
-📦 Repository Structure
 iac-manager/
-├─ infrastructure/          # Stores metadata (auto-created)
-│  ├─ deployments.json
-│  ├─ resources.json
-│  ├─ templates.json
-│  └─ deployment_export.json
-├─ iac_manager.py           # Main script
+├─ infrastructure/
+│ ├─ deployments.json
+│ ├─ resources.json
+│ ├─ templates.json
+│ └─ deployment_export.json
+├─ iac_manager.py
 └─ README.md
 
-▶️ Run the Demo
+yaml
+Copy code
+
+---
+
+## ▶️ Run the Demo
+
+```bash
 python iac_manager.py
-
-
 What it does:
 
-Initializes an IaC Manager workspace (./infrastructure)
+Initializes a local workspace (./infrastructure)
 
 Creates:
 
@@ -62,16 +74,16 @@ A CloudFormation deployment (staging)
 
 A Kubernetes deployment (production)
 
-Lists deployments and their resources
+Lists all deployments and their resources
 
 Generates a drift report
 
-Exports one deployment to deployment_export.json
+Exports deployment details to deployment_export.json
 
 🧪 Example Output
-
-Drift Report Example:
-
+Drift Report Example
+json
+Copy code
 {
   "total_deployments": 3,
   "by_status": {"applied": 3},
@@ -90,10 +102,9 @@ Drift Report Example:
     "kubernetes::Service": 1
   }
 }
-
-
-Deployment Export Example (deployment_export.json):
-
+Deployment Export Example (deployment_export.json)
+json
+Copy code
 {
   "deployment": {
     "id": "tf-production-20251013095501",
@@ -114,24 +125,24 @@ Deployment Export Example (deployment_export.json):
     }
   ]
 }
-
 📄 Supported IaC Generators
 Type	Function	Output Example
 Terraform	generate_terraform_template()	.tf with provider, EC2, SG, outputs
 CloudFormation	generate_cloudformation_template()	JSON with Parameters, Resources, Outputs
 Kubernetes	generate_kubernetes_yaml()	Multi-doc YAML (Deployment + Service)
+
 ⚙️ Key Classes
 Class	Purpose
-IaCManager	Main manager that creates deployments and tracks state
-IaCTemplateGenerator	Generates IaC templates (Terraform / CF / K8s)
-DeploymentRecord	Represents one deployment event
-ResourceInfo	Represents one infrastructure resource
+IaCManager	Core orchestrator for IaC operations
+IaCTemplateGenerator	Generates Terraform / CloudFormation / K8s templates
+DeploymentRecord	Represents one deployment
+ResourceInfo	Represents one resource instance
 TemplateFile	Stores and version-tracks templates
-DeploymentStatus	Enum for state transitions (e.g., applied, failed)
+DeploymentStatus	Enum for deployment states
+
 🧮 Example Usage (Programmatic)
-
-You can import and use the IaC Manager in your own scripts:
-
+python
+Copy code
 from iac_manager import IaCManager
 
 iac = IaCManager("./infra")
@@ -148,15 +159,36 @@ print(f"Created deployment: {deployment_id}")
 
 report = iac.generate_drift_report()
 print(report)
-
 📊 Use Cases
-
 Simulate multi-environment IaC workflows locally
 
 Run demos or training sessions without Terraform CLI
 
-Generate quick IaC manifests for documentation or POCs
+Generate ready-to-use IaC templates for documentation
 
 Track infrastructure drift and environment consistency
 
-Export IaC state for audit or change tracking
+Export deployment state for audit and compliance
+
+Design Philosophy
+Lightweight: 100% Python stdlib
+
+Transparent: All operations logged
+
+Portable: Works offline on any OS
+
+Extendable: Ready for GitOps / CI/CD integration
+
+🐳 Docker (Optional)
+Build:
+
+bash
+Copy code
+docker build -t iac-manager:latest .
+Run:
+
+bash
+Copy code
+docker run --rm -v $(pwd):/work iac-manager:latest python iac_manager.py
+👤 Author
+Siddharth Raut — DevOps / Platform Engineer
