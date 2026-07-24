@@ -1,4 +1,4 @@
-# 🏗️ Infrastructure as Code Manager — Multi-Layer IaC Orchestrator
+# 🏗️ Infrastructure as Code Manager  Multi-Layer IaC Orchestrator
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?logo=python&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-Config-623CE4?logo=terraform)
