@@ -24,7 +24,7 @@ It’s built for DevOps and platform engineers who need a lightweight way to **m
 | Logging | **Python Logging** | Record operations and audit events |
 | Reports | **JSON Drift Report** | Summarize deployments and drift status |
 
-------
+--------
 
 ## 🌐 Architecture
 
